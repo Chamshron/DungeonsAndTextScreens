@@ -1,17 +1,57 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
     public static int health = 100;
-    //    Health variable to calculate health or int damage
     public static int score = 0;
-
 
     public static void main(String[] args) {
         System.out.println("Welcome To Dungeons And Text Screens!");
         System.out.println();
         System.out.println();
         startGame();
+        clear();
+    }
+    public static void confir() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("1. Start the game");
+        System.out.println("2. End the game");
+        System.out.println("Enter your choice");
+        int choice = scanner.nextInt();
+        if(choice == 1) {
+            startGame();
+        } else {
+            System.out.println();
+            System.out.println("Game Over");
+            System.out.println("Your Health Score: " + health   );
+            System.out.println("Your Final Score: " + score );
+        }
+        pause();
+        clear();
+    }
 
+    public static void startGame() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("You find yourself in a strange place, do you:");
+        System.out.println("1. Explore the dark cave ahead of you");
+        System.out.println("2. Turn right and walk through the enchanted forest");
+        System.out.println();
+        System.out.println("Enter your choice traveller:");
+
+        int choice = scanner.nextInt();
+        System.out.println();
+
+        clear();
+        if (choice == 1) {
+            exploreCave();
+        } else if (choice == 2){
+            enterForest();
+        } else {
+            System.out.println("Traveller, you must be confused. Rest a while and try again.");
+        }
+        clear();
+        scanner.close();
     }
 
     public static void exploreCave() {
@@ -48,30 +88,58 @@ public class Main {
         }
         scanner.close();
     }
+    public static int exploreRandom() {
+        Random random = new Random();
+        int randomNumber = random.nextInt();
+        return randomNumber;
+    }
 
-    public static void startGame() {
+    public static void enterForest() {
+        System.out.println("You walk through the enchanted forest and encounter a dangerous creature!");
+        System.out.println("1. Fight with the creature");
+        System.out.println("2. Flee deeper into the forest");
+        System.out.println("Enter your choice");
+
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("You find yourself in a strange place, do you:");
-        System.out.println("1. Explore the dark cave ahead of you");
-        System.out.println("2. Turn right and walk through the enchanted forest");
-        System.out.println();
-        System.out.println("Enter your choice traveller:");
-
         int choice = scanner.nextInt();
-        System.out.println();
 
         clear();
-        if (choice == 1) {
-            exploreCave();
-        } else if (choice == 2){
-            enterForest();
+        if(choice == 1){
+            int num = exploreRandom();
+            if(num == 0){
+                System.out.println("The creature disarms you and devours you!");
+                System.out.println("You have died");
+                System.out.println("Your total score:" + score  );
+                pause();
+            } else {
+                System.out.println("You disarm the beast and win the battle!");
+                score = score + 20;
+                System.out.println("Your score: " + score);
+                System.out.println("You leave the forest!");
+                pause();
+                clear();
+                confir();
+            }
+        } else if (choice == 2) {
+            System.out.println("You flee deeper into the forest and get lost");
+            confir();
         } else {
             System.out.println("Traveller, you must be confused. Rest a while and try again.");
         }
-        clear();
         scanner.close();
     }
+
+    public static void pause() {
+        Scanner scan = new Scanner(System.in);
+        scan.next();
+    }
+
+    public static void clear(){
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
+
 }
 
 
